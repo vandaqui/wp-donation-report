@@ -14,6 +14,6 @@ function wpDReportSettings(){
   add_options_page('Donation Report', 'DReport', 'manage_options', 'wp-dreport', 'dreportHTML');
 }
 
-function dreportHTML(){
-  
-}
+function dreportHTML(){ ?>
+  Hello World!
+<?php }
