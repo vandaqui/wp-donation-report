@@ -7,13 +7,24 @@
   Author: Vand Aquino
   Author URI: https://www.vandaquino.com.br/
 */
+
+/* Creating a class so I can rename functions freely and avoid uniqueness conflicts*/
+class DonationReport{
+  function __construct(){
+    /* Array: First argument is an OBJECT, Second: Name of the method */ 
+    add_action ('admin_menu', array($this, 'adminPage'));
+  }
   
-add_action ('admin_menu', 'wpDReportSettings');
 /* 5 Arguments: 1-Title of the Page, 2-Menu Display Name, 3-Permissions/Capabilities, 4-Shortname/Slug, 5-functionHTML */
-function wpDReportSettings(){
-  add_options_page('Donation Report', 'DReport', 'manage_options', 'wp-dreport', 'dreportHTML');
+  function adminPage(){
+    add_options_page('Donation Report', 'DReport', 'manage_options', 'wp-dreport', array($this, 'drHTML'));
+}
+/* WordPress will take care of the CSS */
+  function drHTML(){ ?>
+<div class="wrap"> 
+  <h1> Settings Page </h1>
+</div>
+  <?php }
 }
 
-function dreportHTML(){ ?>
-  Hello World!
-<?php }
+
