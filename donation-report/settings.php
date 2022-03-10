@@ -27,4 +27,5 @@ class DonationReport{
   <?php }
 }
 
+$donationReport = new DonationReport();
 
