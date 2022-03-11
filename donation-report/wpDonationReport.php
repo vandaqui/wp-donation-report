@@ -30,18 +30,22 @@ class DonationReport{
     // The third is a function which will output the HTML
     // The fourth is the page slug
     // The fifth is the section you want to add the field to 
-    add_settings_field('wdr_location', 'Total Value Display Location', array($this, 'locationHTML'), 'drHTML', 'wdr_first_section'); 
+    add_settings_field('wdr_location', 'Total Value Display Location', array($this, 'locationHTML'), 'wp-dreport', 'wdr_first_section'); 
 
     // Here we can start put our settings options into each argument
     // The first argument is the group the settings belongs to
     // The Second argument is the actual name of the setting
     // The third argument is default values and sanitization
-    register_setting('generalconfig', 'wdr_location', array('sanitize_callback' => 'sanitize_text_field', 'default' => '0'));
+    register_setting('dreportplugin', 'wdr_location', array('sanitize_callback' => 'sanitize_text_field', 'default' => '0'));
   }
   
+  //In the select field ID is not needed
   function locationHTML(){ ?>
 
-    Hello
+    <select name="wdr_location">
+      <option value="0">Top of the Page</option>
+      <option value="1">End of the Page</option>
+    </select>
 
   <?php }
 
@@ -56,7 +60,8 @@ class DonationReport{
       <h1> Settings Page </h1>
       <form action="options.php" method="POST">
         <?php
-          do_settings_section('wp-dreport');
+          settings_fields('dreportplugin');
+          do_settings_sections('wp-dreport');
           submit_button();
         ?>
       </form>
@@ -65,4 +70,3 @@ class DonationReport{
 }
 
 $donationReport = new DonationReport();
-
