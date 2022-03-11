@@ -37,17 +37,24 @@ class DonationReport{
     // The Second argument is the actual name of the setting
     // The third argument is default values and sanitization
     register_setting('dreportplugin', 'wdr_location', array('sanitize_callback' => 'sanitize_text_field', 'default' => '0'));
+
+    add_settings_field('wdr_display_author', 'Display Author Name', array($this, 'displayAuthorHTML'), 'wp-dreport', 'wdr_first_section'); 
+    register_setting('dreportplugin', 'wdr_display_author', array('sanitize_callback' => 'sanitize_text_field', 'default' => 'Post Statistics'));
   }
   
+function displayAuthorHTML(){ ?>
+
+  <input type="text" name="wdr_display_author" value ="<?php echo get_option('wdr_display_author') ?>">
+
+<?php}
+
   //In the select field ID is not needed
   //the function "get_option" has no influence on performance, can be repeated
   function locationHTML(){ ?>
-
     <select name="wdr_location">
       <option value="0" <?php selected(get_option('wdr_location'), '0')?>>Top of the Page</option>
       <option value="1" <?php selected(get_option('wdr_location'), '1')?>>End of the Page</option>
     </select>
-
   <?php }
 
   /*5 Arguments: 1-Title of the Page, 2-Menu Display Name, 3-Permissions/Capabilities, 4-Shortname/Slug, 5-functionHTML*/
