@@ -13,10 +13,10 @@ class DonationReport{
   function __construct(){
     /* Array: First argument is an OBJECT, Second: Name of the method */ 
     add_action ('admin_menu', array($this, 'adminPage'));
-    add_action ('admin_init', array($this, settings'));
+    add_action ('admin_init', array($this, 'settings'));
   }
   
-  funtion seeting() {
+  function settings() {
   /* Here we can start put our settings options into each argument */
   /* The first argument is the group the settings belongs to */
   /* The Second argument is the actual name of the setting */
