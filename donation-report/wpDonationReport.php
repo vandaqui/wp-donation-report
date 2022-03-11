@@ -40,11 +40,12 @@ class DonationReport{
   }
   
   //In the select field ID is not needed
+  //the function "get_option" has no influence on performance, can be repeated
   function locationHTML(){ ?>
 
     <select name="wdr_location">
-      <option value="0">Top of the Page</option>
-      <option value="1">End of the Page</option>
+      <option value="0" <?php selected(get_option('wdr_location'), '0')?>>Top of the Page</option>
+      <option value="1" <?php selected(get_option('wdr_location'), '1')?>>End of the Page</option>
     </select>
 
   <?php }
