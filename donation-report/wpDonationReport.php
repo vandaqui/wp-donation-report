@@ -38,16 +38,21 @@ class DonationReport{
     // The third argument is default values and sanitization
     register_setting('dreportplugin', 'wdr_location', array('sanitize_callback' => 'sanitize_text_field', 'default' => '0'));
 
-    // The next pair of coding will not be commented, as above
-    add_settings_field('wdr_custom_title', 'Display Custom Title', array($this, 'displayAuthorHTML'), 'wp-dreport', 'wdr_first_section'); 
+    // The next paira of coding will not be commented, as above
+    add_settings_field('wdr_custom_title', 'Custom Title', array($this, 'displayCustomTitleHTML'), 'wp-dreport', 'wdr_first_section'); 
     register_setting('dreportplugin', 'wdr_custom_title', array('sanitize_callback' => 'sanitize_text_field', 'default' => 'Donation Title'));
+
+    add_settings_field('wdr_display_values', 'Display Total Value', array($this, 'displayTotalValueHTML'), 'wp-dreport', 'wdr_first_section'); 
+    register_setting('dreportplugin', 'wdr_display_values', array('sanitize_callback' => 'sanitize_text_field', 'default' => '1'));
   }
+
+  function displayTotalValueHTML(){ ?>
+    <input type="checkbox" name="wdr_display_values" value="1" <?php checked(get_option('wdr_display_values'),  '1')?>>
+  <?php }
   
-function displayAuthorHTML() { ?>
-
-  <input type="text" name="wdr_custom_title" value="<?php echo esc_attr(get_option('wdr_custom_title')) ?>">
-
-<?php }
+  function displayCustomTitleHTML() { ?>
+    <input type="text" name="wdr_custom_title" value="<?php echo esc_attr(get_option('wdr_custom_title')) ?>">
+  <?php }
 
   //In the select field ID is not needed
   //the function "get_option" has no influence on performance, can be repeated
