@@ -27,7 +27,7 @@ class DonationReport{
     // Here we can declare 5 arguments to create option fields
     // The first is the name of the setting we want to tie it to
     // The second is the HTML label text users will see
-    // The third is a function which will output the HTML
+    // The third is a function which will output the HTML/Option Title
     // The fourth is the page slug
     // The fifth is the section you want to add the field to 
     add_settings_field('wdr_location', 'Total Value Display Location', array($this, 'locationHTML'), 'wp-dreport', 'wdr_first_section'); 
@@ -38,19 +38,20 @@ class DonationReport{
     // The third argument is default values and sanitization
     register_setting('dreportplugin', 'wdr_location', array('sanitize_callback' => 'sanitize_text_field', 'default' => '0'));
 
-    add_settings_field('wdr_display_author', 'Display Author Name', array($this, 'displayAuthorHTML'), 'wp-dreport', 'wdr_first_section'); 
-    register_setting('dreportplugin', 'wdr_display_author', array('sanitize_callback' => 'sanitize_text_field', 'default' => 'Post Statistics'));
+    // The next pair of coding will not be commented, as above
+    add_settings_field('wdr_custom_title', 'Display Custom Title', array($this, 'displayAuthorHTML'), 'wp-dreport', 'wdr_first_section'); 
+    register_setting('dreportplugin', 'wdr_custom_title', array('sanitize_callback' => 'sanitize_text_field', 'default' => 'Donation Title'));
   }
   
-function displayAuthorHTML(){ ?>
+function displayAuthorHTML() { ?>
 
-  <input type="text" name="wdr_display_author" value ="<?php echo get_option('wdr_display_author') ?>">
+  <input type="text" name="wdr_custom_title" value="<?php echo esc_attr(get_option('wdr_custom_title')) ?>">
 
-<?php}
+<?php }
 
   //In the select field ID is not needed
   //the function "get_option" has no influence on performance, can be repeated
-  function locationHTML(){ ?>
+  function locationHTML() { ?>
     <select name="wdr_location">
       <option value="0" <?php selected(get_option('wdr_location'), '0')?>>Top of the Page</option>
       <option value="1" <?php selected(get_option('wdr_location'), '1')?>>End of the Page</option>
