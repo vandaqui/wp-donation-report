@@ -36,7 +36,7 @@ class DonationReport{
     // The first argument is the group the settings belongs to
     // The Second argument is the actual name of the setting
     // The third argument is default values and sanitization
-    register_setting('dreportplugin', 'wdr_location', array('sanitize_callback' => 'sanitize_text_field', 'default' => '0'));
+    register_setting('dreportplugin', 'wdr_location', array('sanitize_callback' => array($this, 'sanitizeLocation'), 'default' => '0'));
 
     // The next paira of coding will not be commented, as above
     add_settings_field('wdr_custom_title', 'Custom Title', array($this, 'displayCustomTitleHTML'), 'wp-dreport', 'wdr_first_section'); 
@@ -52,6 +52,20 @@ class DonationReport{
     register_setting('dreportplugin', 'wdr_display_donated_target', array('sanitize_callback' => 'sanitize_text_field', 'default' => '1'));
   }
 
+  function sanitizeLocation($input) {
+    if ($input != '0' AND $input != '1'){
+      // 3 Arguments for the error warning (if the user tries to insert an unvailable option): 
+      // 1 - The name of the option the error is related
+      // 2 - The slug identifier of the error
+      // 3 - The message will be displayed
+      add_settings_error('wdr_location', 'wdr_location_error', 'You must choose an availabe option!');
+      return get_option('wdr_location');
+    }
+    // if the user choose the option correctly, return the input
+    return $input;
+  }
+
+  // This is a reusable function for the checkboxes ($args)
   function checkboxHTML($args){ ?>
     <input type="checkbox" name="<?php echo $args['checkbox_name'] ?>" value="1" <?php checked(get_option($args['checkbox_name']),  '1')?>>
   <?php }
