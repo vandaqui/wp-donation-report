@@ -42,12 +42,18 @@ class DonationReport{
     add_settings_field('wdr_custom_title', 'Custom Title', array($this, 'displayCustomTitleHTML'), 'wp-dreport', 'wdr_first_section'); 
     register_setting('dreportplugin', 'wdr_custom_title', array('sanitize_callback' => 'sanitize_text_field', 'default' => 'Donation Title'));
 
-    add_settings_field('wdr_display_values', 'Display Total Value', array($this, 'displayTotalValueHTML'), 'wp-dreport', 'wdr_first_section'); 
+    add_settings_field('wdr_display_values', 'Display Total Value', array($this, 'checkboxHTML'), 'wp-dreport', 'wdr_first_section', array('checkbox_name' => 'wdr_display_values')); 
     register_setting('dreportplugin', 'wdr_display_values', array('sanitize_callback' => 'sanitize_text_field', 'default' => '1'));
+
+    add_settings_field('wdr_display_receipt', 'Display Receipt', array($this, 'checkboxHTML'), 'wp-dreport', 'wdr_first_section', array('checkbox_name' => 'wdr_display_receipt')); 
+    register_setting('dreportplugin', 'wdr_display_receipt', array('sanitize_callback' => 'sanitize_text_field', 'default' => '1'));
+
+    add_settings_field('wdr_display_donated_target', 'Display Donated Target', array($this, 'checkboxHTML'), 'wp-dreport', 'wdr_first_section', array('checkbox_name' => 'wdr_display_donated_target')); 
+    register_setting('dreportplugin', 'wdr_display_donated_target', array('sanitize_callback' => 'sanitize_text_field', 'default' => '1'));
   }
 
-  function displayTotalValueHTML(){ ?>
-    <input type="checkbox" name="wdr_display_values" value="1" <?php checked(get_option('wdr_display_values'),  '1')?>>
+  function checkboxHTML($args){ ?>
+    <input type="checkbox" name="<?php echo $args['checkbox_name'] ?>" value="1" <?php checked(get_option($args['checkbox_name']),  '1')?>>
   <?php }
   
   function displayCustomTitleHTML() { ?>
